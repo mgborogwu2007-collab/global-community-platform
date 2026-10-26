@@ -1,304 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#000000">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
 <title>WORLDORA</title>
-
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#000;color:#eee;font:15px Arial,sans-serif}
+body{margin:0;background:#050505;color:#f5f5f5;font:15px Arial,sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
-.layout{max-width:1150px;margin:auto;display:grid;grid-template-columns:210px minmax(0,650px) 250px;gap:18px;padding:0 15px}
-.side{position:sticky;top:0;height:100vh;padding:24px 8px;border-right:1px solid #262626}
-.logo{font-size:28px;font-weight:bold;margin-bottom:25px}
-.logo b{color:#1d9bf0}
-.nav button{display:block;width:100%;text-align:left;background:none;color:#eee;border:0;border-radius:28px;padding:14px;font-size:17px}
-.nav button:hover{background:#171717}
-.main{border-right:1px solid #262626;border-left:1px solid #262626;min-height:100vh}
-.top{padding:17px;border-bottom:1px solid #262626;position:sticky;top:0;background:#000e;z-index:3}
-.top h1{margin:0;font-size:21px}
-.composer{padding:18px;border-bottom:8px solid #111}
-.composer textarea{width:100%;height:75px;background:transparent;color:white;border:0;outline:0;font-size:18px;resize:vertical}
-.row{display:flex;gap:12px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#171717;border:1px solid #333;display:grid;place-items:center;color:#1d9bf0;font-weight:bold;flex-shrink:0}
-.inside{flex:1;min-width:0}
-.tools{border-top:1px solid #262626;padding-top:12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.tools label,.tools button{color:#1d9bf0;background:none;border:0}
-.postbtn,.blue{background:#1d9bf0;color:white;border:0;border-radius:25px;padding:10px 17px;font-weight:bold}
-.postbtn{margin-left:auto}
-.post{display:flex;gap:12px;padding:17px;border-bottom:1px solid #262626}
-.body{min-width:0;flex:1}
-.muted{color:#888;font-size:13px}
-.text{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
-.media{width:100%;max-height:450px;object-fit:contain;background:#111;border-radius:14px;margin:7px 0}
-.actions{display:flex;justify-content:space-between;gap:4px;max-width:450px}
-.actions button{background:none;color:#999;border:0;padding:8px 2px;font-size:13px}
-.actions button:hover,.actions .liked{color:#f91880}
-.right{padding:18px 0}
-.search{width:100%;padding:12px 16px;background:#151515;color:white;border:1px solid #333;border-radius:28px;outline:0}
-.card{border:1px solid #292929;border-radius:16px;margin-top:17px;padding:16px}
-.card h2{font-size:19px;margin:0 0 12px}
-.card p,.note{font-size:12px;color:#999;line-height:1.5}
+.layout{max-width:1100px;margin:auto;display:grid;grid-template-columns:190px minmax(0,650px) 240px;gap:20px;padding:0 14px}
+.side{height:100vh;position:sticky;top:0;padding:20px 0;display:flex;flex-direction:column;gap:7px;border-right:1px solid #292929}
+.logo{font-weight:900;font-size:24px;margin:4px 12px 20px}
+.logo b{border:1px solid white;border-radius:50%;padding:3px 7px;margin-right:5px}
+.nav{border:0;background:transparent;color:white;text-align:left;padding:13px;border-radius:24px}
+.nav:hover,.nav.active{background:#1b1b1b}
+.primary{border:0;background:#f5f5f5;color:#050505;border-radius:24px;font-weight:bold;padding:11px 16px}
+.side .primary{margin:10px 8px}
+.tiny{margin-top:auto;color:#888;font-size:12px;padding:10px}
+main{min-width:0;border-right:1px solid #292929;min-height:100vh}
+.top{position:sticky;top:0;background:#080808ed;padding:17px 20px;border-bottom:1px solid #292929;font-weight:bold;font-size:19px;z-index:2}
+.composer,.post{padding:18px 20px;border-bottom:1px solid #292929}
+textarea{display:block;width:100%;min-height:75px;resize:vertical;background:transparent;border:0;outline:0;color:white;font-size:17px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pick,.secondary{border:1px solid #383838;border-radius:22px;background:#171717;color:#eee;padding:8px 11px;font-size:13px}
+.pick input{display:none}
+.muted,.handle{color:#999;font-size:13px}
+.posthead{display:flex;align-items:center;gap:10px}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#252525;border:1px solid #444;font-weight:bold;flex-shrink:0}
+.meta{flex:1}
+.meta strong{display:block}
+.text{white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0}
+.media{display:block;max-width:100%;max-height:440px;border-radius:13px;margin-top:10px;border:1px solid #333}
+.audio{width:100%;margin-top:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.act{background:transparent;border:0;color:#aaa;border-radius:18px;padding:7px 9px}
+.act:hover{background:#1b1b1b;color:white}
+.liked{color:#ff6b8a}
+.empty,.notice{padding:24px 18px;color:#999}
+.right{padding-top:20px}
+.search{width:100%;background:#151515;border:1px solid #333;border-radius:25px;padding:12px 14px;color:white;outline:0}
+.card{background:#101010;border:1px solid #292929;border-radius:15px;padding:15px;margin-top:17px}
 .section{display:none}
 .section.active{display:block}
-.empty{padding:30px 15px;text-align:center;color:#888}
-.mobile{display:none}
-@media(max-width:900px){
+.profile{padding:24px 20px;border-bottom:1px solid #292929}
+@media(max-width:850px){
 .layout{grid-template-columns:65px minmax(0,650px);gap:10px}
 .right{display:none}
-.logo{font-size:0}
-.logo b{font-size:27px}
-.nav button{font-size:0;text-align:center;padding:14px 2px}
-.nav button:first-letter{font-size:22px}
+.side{padding-right:5px}
+.logo{font-size:0;margin:5px 0 20px}
+.logo b{font-size:18px}
+.nav{font-size:0;text-align:center;padding:13px 2px}
+.nav::first-letter{font-size:19px}
+.side .primary{font-size:0;padding:12px 2px}
+.side .primary:after{content:'+';font-size:22px}
+.tiny{display:none}
 }
-@media(max-width:600px){
+@media(max-width:520px){
 .layout{display:block;padding:0}
-.side{display:none}
-.main{border:0;padding-bottom:60px}
+.side{position:fixed;top:auto;bottom:0;left:0;right:0;width:100%;height:auto;z-index:5;flex-direction:row;justify-content:space-around;background:#050505;border-right:0;border-top:1px solid #292929;padding:5px 3px;gap:0}
+.logo,.side .primary,.tiny{display:none}
+.nav{flex:1;width:auto;font-size:0;padding:12px 2px;border-radius:10px}
+.nav::first-letter{font-size:20px}
+main{border:0;padding-bottom:60px}
 .top{padding:15px}
 .composer,.post{padding:15px}
-.mobile{display:flex;position:fixed;bottom:0;left:0;right:0;background:#000f;border-top:1px solid #333;justify-content:space-around;padding:10px;z-index:5}
-.mobile button{background:none;border:0;color:#eee;font-size:21px}
-.actions button{font-size:12px}
 }
 </style>
 </head>
-
 <body>
 <div class="layout">
-
 <aside class="side">
-<div class="logo"><b>W</b>ORLDORA</div>
-<nav class="nav">
-<button onclick="section('home')">⌂ Home</button>
-<button onclick="section('explore')">⌕ Explore</button>
-<button onclick="section('videos')">▶ Videos</button>
-<button onclick="section('music')">♫ Music</button>
-<button onclick="section('studio')">▣ Creator Studio</button>
-<button onclick="profile()">♙ Profile</button>
-</nav>
-<p class="note">Connect · Create · Grow</p>
+<div class="logo"><b>W</b>WORLDORA</div>
+<button class="nav active" data-tab="home">⌂ Home</button>
+<button class="nav" data-tab="explore">⌕ Explore</button>
+<button class="nav" data-tab="videos">▶ Videos</button>
+<button class="nav" data-tab="music">♫ Music</button>
+<button class="nav" data-tab="profile">◉ Profile</button>
+<button class="nav" data-tab="studio">▣ Creator Studio</button>
+<button class="primary" id="goPost">Create post</button>
+<div class="tiny">WORLDORA · Your world, connected<br>Prototype</div>
 </aside>
-
-<main class="main">
-<header class="top"><h1 id="title">Home</h1></header>
-
+<main>
+<div class="top" id="title">Home</div>
 <section id="home" class="section active">
-<div class="composer">
-<div class="row">
-<div class="avatar">W</div>
-<div class="inside">
+<div class="composer" id="composer">
 <textarea id="text" placeholder="What would you like to share?"></textarea>
-<div class="muted" id="filesLabel">Add text, photos, videos or music</div>
-
+<div class="row">
 <div class="tools">
-<label>▧ Photo/video
-<input id="media" type="file" accept="image/*,video/*" multiple hidden onchange="chooseMedia()">
-</label>
-
-<label>♫ Music/audio
-<input id="audio" type="file" accept="audio/*" hidden onchange="chooseMedia()">
-</label>
-
-<button onclick="alert('Polls will be added in a later version.')">▤ Poll</button>
-<button class="postbtn" onclick="createPost()">Post</button>
+<label class="pick">＋ Photo/video<input id="media" type="file" accept="image/*,video/*"></label>
+<label class="pick">♫ Audio<input id="audio" type="file" accept="audio/*"></label>
+<span class="muted" id="chosen"></span>
 </div>
-</div>
+<button class="primary" id="publish">Post</button>
 </div>
 </div>
 <div id="feed"></div>
 </section>
-
 <section id="explore" class="section">
-<div class="composer">
-<h2>Explore WORLDORA</h2>
-<input class="search" id="mobileSearch" placeholder="Search posts..." oninput="search(this.value)">
-</div>
-<div id="exploreFeed"></div>
+<div class="notice">Search posts stored in this browser.</div>
+<div style="padding:15px"><input id="mobileSearch" class="search" placeholder="Search posts..."></div>
+<div id="results"></div>
 </section>
-
 <section id="videos" class="section">
-<div class="composer">
-<h2>Videos</h2>
-<p class="note">Explore video posts available in this browser.</p>
-</div>
-<div id="videoFeed"></div>
+<div class="notice">Videos attached to posts appear here.</div>
+<div id="videosList"></div>
 </section>
-
 <section id="music" class="section">
-<div class="composer">
-<h2>WORLDORA Music ♫</h2>
-<p class="note">Share original audio and discover creators. This prototype previews audio but does not distribute music or pay royalties.</p>
-</div>
-<div id="musicFeed"></div>
+<div class="notice">Audio attached to posts appear here.</div>
+<div id="musicList"></div>
 </section>
-
+<section id="profile" class="section">
+<div class="profile">
+<div class="avatar" style="width:70px;height:70px;font-size:23px;margin-bottom:12px">W</div>
+<h2 id="profileName">WORLDORA Member</h2>
+<input id="name" class="search" placeholder="Choose display name" style="max-width:250px">
+<button class="secondary" id="saveName">Save name</button>
+</div>
+<div id="myPosts"></div>
+</section>
 <section id="studio" class="section">
-<div class="composer">
+<div class="profile">
 <h2>Creator Studio</h2>
+<p>Manage your creator journey.</p>
 <div class="card">
-<h3>Creator earnings</h3>
-<p>Payments are not enabled. Views and likes in this prototype do not generate money.</p>
+<b>Creator earnings</b>
+<p class="muted">Payouts are not connected. Real payments require backend services, analytics, and a payment provider.</p>
 </div>
 <div class="card">
-<h3>What is needed for payouts?</h3>
-<p>A secure backend, real accounts, view analytics, monetization rules, fraud prevention and a payment provider.</p>
+<b>Important</b>
+<p class="muted">This is a prototype. Posts are stored in this browser only. A database and cloud storage are needed to share posts with other users.</p>
 </div>
 </div>
 </section>
 </main>
-
 <aside class="right">
-<input class="search" id="searchBox" placeholder="Search WORLDORA" oninput="search(this.value)">
-<div class="card">
-<h2>What's happening</h2>
-<p>Share an idea. Find creators. Discover videos and music.</p>
-</div>
-<div class="card">
-<h2>About WORLDORA</h2>
-<p>A black, X-inspired social interface for posts, media and creator discovery.</p>
-<p>Posts are saved only in this browser. They are not shared with other users.</p>
-</div>
+<input id="search" class="search" placeholder="Search posts...">
+<div class="card"><b>Welcome to WORLDORA</b><p class="muted">Share ideas, videos, photos, and music.</p></div>
+<div class="card"><b>Current version</b><p class="muted">Posts are not yet shared with other users.</p></div>
 </aside>
 </div>
-
-<nav class="mobile">
-<button onclick="section('home')">⌂</button>
-<button onclick="section('explore')">⌕</button>
-<button onclick="section('home');document.getElementById('text').focus()">＋</button>
-<button onclick="section('videos')">▶</button>
-<button onclick="section('music')">♫</button>
-</nav>
-
 <script>
-const KEY='worldora_black_posts_v1';
-let posts=[],files=[];
-
-try{
-posts=JSON.parse(localStorage.getItem(KEY)||'[]');
-}catch(e){posts=[];}
-
-function save(){
-try{
-localStorage.setItem(KEY,JSON.stringify(posts));
-}catch(e){
-alert('Browser storage is full. Try a smaller media file.');
+const $=id=>document.getElementById(id);
+let posts=[],chosenMedia=null,chosenAudio=null;
+let username=localStorage.getItem('worldora_username')||'WORLDORA Member';
+try{posts=JSON.parse(localStorage.getItem('worldora_posts')||'[]')}catch(e){posts=[]}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function save(){try{localStorage.setItem('worldora_posts',JSON.stringify(posts))}catch(e){alert('Storage limit reached. Try smaller media files.')}}
+function card(p){
+let m='';
+if(p.media)m=p.mediaType&&p.mediaType.startsWith('video/')?`<video class="media" controls playsinline src="${p.media}"></video>`:`<img class="media" src="${p.media}" alt="Post image">`;
+if(p.audio)m+=`<audio class="audio" controls src="${p.audio}"></audio>`;
+return `<article class="post"><div class="posthead"><div class="avatar">${esc((p.user||'W').charAt(0).toUpperCase())}</div><div class="meta"><strong>${esc(p.user||'WORLDORA Member')}</strong><span class="handle">${esc(p.when||'')}</span></div></div>${p.text?`<div class="text">${esc(p.text)}</div>`:''}${m}<div class="actions"><button class="act ${p.liked?'liked':''}" data-like="${p.id}">${p.liked?'♥':'♡'} Like (${p.likes||0})</button><button class="act" data-share="${p.id}">↗ Share</button><button class="act" data-remove="${p.id}">Delete</button></div></article>`
 }
+function list(id,arr){$(id).innerHTML=arr.length?arr.map(card).join(''):'<div class="empty">Nothing here yet. Create the first post!</div>'}
+function render(){
+list('feed',posts);
+list('myPosts',posts.filter(p=>p.user===username));
+let q=($('search').value||$('mobileSearch').value||'').toLowerCase();
+list('results',posts.filter(p=>(p.text+' '+p.user).toLowerCase().includes(q)));
+list('videosList',posts.filter(p=>p.mediaType&&p.mediaType.startsWith('video/')));
+list('musicList',posts.filter(p=>p.audio));
+$('profileName').textContent=username
 }
-
-function esc(s){
-return String(s).replace(/[&<>"']/g,c=>({
-'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-}[c]));
+function tab(n){
+document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===n));
+document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===n));
+$('title').textContent=({home:'Home',explore:'Explore',videos:'Videos',music:'Music',profile:'Profile',studio:'Creator Studio'})[n]||'Home';
+render()
 }
-
-function chooseMedia(){
-files=[];
-for(const input of ['media','audio']){
-for(const f of document.getElementById(input).files){
-if(f.size>15*1024*1024){
-alert(f.name+' is large; local saving may fail.');
-continue;
-}
-files.push({
-name:f.name,
-type:f.type,
-url:URL.createObjectURL(f)
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
+$('goPost').onclick=()=>{tab('home');$('text').focus()};
+$('media').onchange=e=>{chosenMedia=e.target.files[0]||null;$('chosen').textContent=[chosenMedia&&chosenMedia.name,chosenAudio&&chosenAudio.name].filter(Boolean).join(', ')};
+$('audio').onchange=e=>{chosenAudio=e.target.files[0]||null;$('chosen').textContent=[chosenMedia&&chosenMedia.name,chosenAudio&&chosenAudio.name].filter(Boolean).join(', ')};
+function data(file,cb){if(!file)return cb(null);let r=new FileReader();r.onload=()=>cb(r.result);r.onerror=()=>cb(null);r.readAsDataURL(file)}
+$('publish').onclick=()=>{
+let t=$('text').value.trim();
+if(!t&&!chosenMedia&&!chosenAudio){alert('Write a post or choose a media file first.');return}
+let p={id:Date.now().toString(),user:username,text:t,likes:0,liked:false,when:new Date().toLocaleString(),media:null,mediaType:chosenMedia?chosenMedia.type:null,audio:null};
+data(chosenMedia,md=>{p.media=md;data(chosenAudio,ad=>{p.audio=ad;posts.unshift(p);save();$('text').value='';$('media').value='';$('audio').value='';chosenMedia=chosenAudio=null;$('chosen').textContent='';render();alert('Post added on this device. It is not yet shared with other users.')})})
+};
+document.addEventListener('click',e=>{
+let b=e.target.closest('[data-like]');
+if(b){let p=posts.find(p=>p.id===b.dataset.like);if(p){p.liked=!p.liked;p.likes=Math.max(0,(p.likes||0)+(p.liked?1:-1));save();render()}return}
+b=e.target.closest('[data-remove]');
+if(b){if(confirm('Delete this post from this device?')){posts=posts.filter(p=>p.id!==b.dataset.remove);save();render()}return}
+b=e.target.closest('[data-share]');
+if(b){let p=posts.find(p=>p.id===b.dataset.share),txt=p?`${p.user}: ${p.text}`:'WORLDORA post';if(navigator.share)navigator.share({title:'WORLDORA',text:txt}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>alert('Post text copied.')).catch(()=>alert(txt));else alert(txt)}
 });
-}
-}
-document.getElementById('filesLabel').textContent=
-files.length?files.map(f=>f.name).join(', '):
-'Add text, photos, videos or music';
-}
-
-function mediaHTML(m){
-if(m.type.startsWith('image/'))
-return `<img class="media" src="${esc(m.url)}" alt="Post image">`;
-
-if(m.type.startsWith('video/'))
-return `<video class="media" controls playsinline src="${esc(m.url)}"></video>`;
-
-if(m.type.startsWith('audio/'))
-return `<audio controls style="width:100%" src="${esc(m.url)}"></audio>`;
-
-return '';
-}
-
-function postHTML(p){
-return `
-<article class="post">
-<div class="avatar">${esc((p.name||'W')[0])}</div>
-<div class="body">
-<b>${esc(p.name||'WORLDORA Creator')}</b>
-<span class="muted">@creator · ${new Date(p.time).toLocaleDateString()}</span>
-<div class="text">${esc(p.text||'')}</div>
-${(p.media||[]).map(mediaHTML).join('')}
-<div class="actions">
-<button onclick="reply(${p.id})">♧ ${p.replies||0} Reply</button>
-<button onclick="share(${p.id})">↗ Share</button>
-<button class="${p.liked?'liked':''}" onclick="like(${p.id})">${p.liked?'♥':'♡'} ${p.likes||0} Like</button>
-<button onclick="removePost(${p.id})">⋯</button>
-</div>
-</div>
-</article>`;
-}
-
-function render(list=posts){
-document.getElementById('feed').innerHTML=list.length?
-list.map(postHTML).join(''):
-'<div class="empty">No posts yet. Be the first to post.</div>';
-
-document.getElementById('exploreFeed').innerHTML=list.map(postHTML).join('');
-
-let v=list.filter(p=>(p.media||[]).some(m=>m.type.startsWith('video/')));
-document.getElementById('videoFeed').innerHTML=v.length?
-v.map(postHTML).join(''):
-'<div class="empty">No videos yet. Create a post and select a video.</div>';
-
-let a=list.filter(p=>(p.media||[]).some(m=>m.type.startsWith('audio/')));
-document.getElementById('musicFeed').innerHTML=a.length?
-a.map(postHTML).join(''):
-'<div class="empty">No music yet. Create a post and select an audio file.</div>';
-}
-
-function createPost(){
-let text=document.getElementById('text').value.trim();
-
-if(!text&&!files.length){
-alert('Write a message or choose a media file first.');
-return;
-}
-
-posts.unshift({
-id:Date.now(),
-name:localStorage.getItem('worldora_name')||'WORLDORA Creator',
-text,
-media:files.map(x=>({...x})),
-time:new Date().toISOString(),
-likes:0,
-liked:false,
-replies:0
-});
-
-save();
-document.getElementById('text').value='';
-document.getElementById('media').value='';
-document.getElementById('audio').value='';
-files=[];
-document.getElementById('filesLabel').textContent='Add text, photos, videos or music';
+$('search').oninput=render;
+$('mobileSearch').oninput=()=>tab('explore');
+$('saveName').onclick=()=>{let n=$('name').value.trim();if(n){username=n;localStorage.setItem('worldora_username',n);render();alert('Display name saved on this device.')}};
+$('name').value=username;
 render();
-section('home');
-}
-
-function like(id){
-let p=posts.find(x=>x.id===id);
-if(p){
-p.liked=!p.liked;
-p.likes=Math.max(0,(p.likes||0)+(p.liked?1:-1));
+</script>
+</body>
+        </html>;
 save();
 renderFiltered();
 }
