@@ -1181,26 +1181,56 @@ document.getElementById("authModal").addEventListener("click", event => {
   if (event.target.id === "authModal") closeAuth();
 });
 
-document.getElementById("authForm").addEventListener("submit", event => {
+document.getElementById("authForm").addEventListener("submit", async event => {
   event.preventDefault();
+
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
 
   const name = document.getElementById("authName").value.trim();
   const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
 
-  if (!name || !email) {
-    toast("Enter your name and email.");
+  if (!name || !email || !password) {
+    toast("Please complete every field.");
     return;
   }
 
-  profile.name = name;
-  profile.email = email;
-  safeWrite(STORAGE.profile, profile);
+  button.disabled = true;
+  button.textContent = "Creating account...";
 
-  // This is deliberately a local preview. It does not authenticate a user.
-  closeAuth();
-  renderPosts();
-  renderProfile();
-  toast("Preview profile created on this device. Real sign-in is not connected.");
+  try {
+    const { data, error } = await worldoraSupabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: name
+        }
+      }
+    });
+
+    if (error) throw error;
+
+    profile.name = name;
+    profile.email = email;
+    safeWrite(STORAGE.profile, profile);
+
+    closeAuth();
+    renderPosts();
+    renderProfile();
+
+    if (data.session) {
+      toast("Your WORLDORA account has been created!");
+    } else {
+      toast("Check your email to confirm your account.");
+    }
+  } catch (error) {
+    toast(error.message || "Registration failed. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Continue preview";
+  }
 });
 
 function joinCommunity(name) {
